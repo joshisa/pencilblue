@@ -72,7 +72,11 @@ module.exports = function CacheModule(pb){
 
         var moduleAtPlay = config.fake ? "fakeredis" : "redis";
         var Redis        = require(moduleAtPlay);
-        return Redis.createClient(config.port, config.host, config);
+        if (config.uri) {
+          return Redis.createClient(config.uri);
+        } else {
+          return Redis.createClient(config.port, config.host, config);
+        }
     };
 
     /**
